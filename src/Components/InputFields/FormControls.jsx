@@ -1,5 +1,5 @@
 import React from "react";
-import { InputField } from "../Components/InputFields/Input";
+import { InputField } from "./Input";
 export const FormControls = (props) => {
 	const { control, ...rest } = props;
 

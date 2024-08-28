@@ -8,7 +8,7 @@ import { loginInitialValues, loginValidationSchema } from "../Formik/index";
 import RoutesConstant from "../Routes/Constant";
 import bidShushi from "../Services/Api/Api";
 import { LoginSvg } from "../Common/Svg";
-import { FormControls } from "../Formik/FormControls";
+import { FormControls } from "../Components/InputFields/FormControls";
 
 /*
 	Formik sa direct state management and validation track hogi to:
