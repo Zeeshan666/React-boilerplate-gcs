@@ -8,7 +8,7 @@ import { loginInitialValues, loginValidationSchema } from "../Formik/index";
 import RoutesConstant from "../Routes/Constant";
 import bidShushi from "../Services/Api/Api";
 import { LoginSvg } from "../Common/Svg";
-import { FormikControl } from "../Formik/FormikControl";
+import { FormControls } from "../Formik/FormControls";
 
 /*
 	Formik sa direct state management and validation track hogi to:
@@ -119,28 +119,15 @@ const Index = () => {
 										tabIndex="2"
 										label="Password"
 									/>
-
 									<div className="row mb-2 mt-4">
-										<div className="col-md-6">
-											<div className="form-group-check pt-0">
-												<div className="form-check form-check-inline">
-													<Field
-														className="form-check-input"
-														tabIndex="3"
-														type="checkbox"
-														id="rememberMe"
-														name="rememberMe"
-													/>
-													<label
-														className="form-check-label simple-label no-style"
-														htmlFor="rememberMe"
-													>
-														{" "}
-														Remember me
-													</label>
-												</div>
-											</div>
-										</div>
+										<FormikControl
+											control="checkbox"
+											name="rememberMe"
+											label="Remember Me"
+											tabIndex="3"
+											className="col-md-6"
+											options={[{ value: "rememberMe", key: "Remember Me" }]}
+										/>
 										<div className="col-md-6 text-end">
 											<Link
 												to={RoutesConstant.forgotPassword}

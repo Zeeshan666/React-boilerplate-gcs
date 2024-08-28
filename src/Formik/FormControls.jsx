@@ -1,6 +1,6 @@
 import React from "react";
-import { InputField } from "./InputFields/Input";
-export const FormikControl = (props) => {
+import { InputField } from "../Components/InputFields/Input";
+export const FormControls = (props) => {
 	const { control, ...rest } = props;
 
 	switch (control) {
