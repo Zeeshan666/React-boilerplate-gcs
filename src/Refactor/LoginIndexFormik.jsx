@@ -8,6 +8,7 @@ import { loginInitialValues, loginValidationSchema } from "../Formik/index";
 import RoutesConstant from "../Routes/Constant";
 import bidShushi from "../Services/Api/Api";
 import { LoginSvg } from "../Common/Svg";
+import { FormikControl } from "../Formik/FormikControl";
 
 /*
 	Formik sa direct state management and validation track hogi to:
@@ -100,48 +101,25 @@ const Index = () => {
 						>
 							{({ isSubmitting, isValid }) => (
 								<Form>
-									<div className="form-group">
-										<label>
-											Username{" "}
-											<i className="float-end">
-												<img src="/images/user-icon.png" />{" "}
-											</i>{" "}
-										</label>
-										<Field
-											className="form-control"
-											placeholder="Enter Your Username"
-											type="text"
-											id="user"
-											name="email"
-											tabIndex="1"
-										/>
-										<ErrorMessage
-											name="email"
-											component="span"
-											className="text-danger"
-										/>
-									</div>
-									<div className="form-group">
-										<label>
-											Password{" "}
-											<i className="float-end">
-												<img src="/images/key-icon.png" alt="Key Icon" />{" "}
-											</i>
-										</label>
-										<Field
-											className="form-control"
-											placeholder="Enter Your Password"
-											type="password"
-											id="password"
-											name="password"
-											tabIndex="2"
-										/>
-										<ErrorMessage
-											name="password"
-											component="span"
-											className="text-danger"
-										/>
-									</div>
+									<FormikControl
+										control="input"
+										type="text"
+										name="email"
+										imgsrc="/images/user-icon.png"
+										placeholder="Enter Your Email"
+										tabIndex="1"
+										label="Username"
+									/>
+									<FormikControl
+										control="input"
+										type="password"
+										name="password"
+										imgsrc="/images/key-icon.png"
+										placeholder="Enter Your Password"
+										tabIndex="2"
+										label="Password"
+									/>
+
 									<div className="row mb-2 mt-4">
 										<div className="col-md-6">
 											<div className="form-group-check pt-0">
