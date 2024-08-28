@@ -101,7 +101,7 @@ const Index = () => {
 						>
 							{({ isSubmitting, isValid }) => (
 								<Form>
-									<FormikControl
+									<FormControls
 										control="input"
 										type="text"
 										name="email"
@@ -110,7 +110,7 @@ const Index = () => {
 										tabIndex="1"
 										label="Username"
 									/>
-									<FormikControl
+									<FormControls
 										control="input"
 										type="password"
 										name="password"
@@ -120,7 +120,7 @@ const Index = () => {
 										label="Password"
 									/>
 									<div className="row mb-2 mt-4">
-										<FormikControl
+										<FormControls
 											control="checkbox"
 											name="rememberMe"
 											label="Remember Me"
