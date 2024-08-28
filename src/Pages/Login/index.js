@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { notification } from "antd";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import { LOGIN_ACTION, USER_ROLE } from "../../Context/Actions";
-import { USER_EMAIL_REGEX } from "../../Common/index";
-import RoutesConstant from "../../Routes/Constant";
-import bidShushi from "../../Services/Api/Api";
-import { LoginSvg } from "../../Common/Svg";
+import { useAuthContext } from "hooks/useAuthContext";
+import { LOGIN_ACTION, USER_ROLE } from "Context/Actions";
+import { USER_EMAIL_REGEX } from "Common/index";
+import RoutesConstant from "Routes/Constant.js";
+import bidShushi from "Services/Api/Api";
+import { LoginSvg } from "Common/Svg";
 
 const Index = () => {
   //Notifications
