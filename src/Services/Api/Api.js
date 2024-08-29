@@ -63,18 +63,6 @@ const bidShushi = {
   verifyResetPasswordToken,
   updateUser,
   updateUserProfile,
-  deleteStage,
-  createStage,
-  updateStage,
-  testAuth,
-  getRefreshToken,
-  logout,
-  forgotPassword,
-  verifyEmail,
-  updatePassword,
-  accountActivation,
-  sortedStages,
-  colorsList,
 };
 
 export default bidShushi;
