@@ -44,7 +44,7 @@ export const CheckBox = (props) => {
 	);
 };
 
-const { Group: CheckboxGroup } = Checkbox;
+const CheckboxGroup = Checkbox.Group;
 
 export const CheckboxField = (props) => {
 	const {
