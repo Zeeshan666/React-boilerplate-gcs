@@ -51,16 +51,7 @@ function getBidStatuses() {
   });
 }
 
-function getAllExternalUsers(page = 0, size = -1, sortColumn, sortBy) {
-  let url = `${BASE_URL}/users/getUsers?isActive=true&role=${EXTERNAL_ROLE}&page=${page}&size=${size}`;
-  if (sortColumn != "" && sortBy != "") {
-    url += `&sortBy=${sortColumn} ${sortBy}`;
-  }
-  return request({
-    url: url,
-    method: "GET",
-  });
-}
+
 
 function createUser(data) {
   return request({

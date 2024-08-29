@@ -5,7 +5,6 @@ const Index = () => {
 
   return (
     <>
-      {contextHolder}
       <p>test</p>
     </>
   );
