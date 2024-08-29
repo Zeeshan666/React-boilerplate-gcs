@@ -24,19 +24,15 @@ export const SelectField = (props) => {
 			</label>
 			<Field name={name} className={fieldClass}>
 				{({ field, form }) => {
-					const { value } = field;
 					const { setFieldValue, setFieldTouched } = form;
 
 					return (
 						<Select
-							id={name}
-							{...field}
 							{...rest}
 							mode={mode}
-							value={value || []}
+							value={field.value || []}
 							onChange={(val) => setFieldValue(name, val)}
 							onBlur={() => setFieldTouched(name, true)}
-							placeholder={placeholder}
 							style={{ width: "100%" }} // Ensure full width for the select
 						>
 							{options &&

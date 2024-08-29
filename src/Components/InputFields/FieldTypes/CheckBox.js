@@ -21,7 +21,10 @@ export const CheckBox = (props) => {
 					<>
 						{options &&
 							options.map((option) => (
-								<div className={keyClass} key={option.value}>
+								<div
+									className={keyClass}
+									key={option.value}
+								>
 									<input
 										type="checkbox"
 										id={option.value}
@@ -31,7 +34,10 @@ export const CheckBox = (props) => {
 										value={option.value}
 										// checked={field.value.includes(option.value)}
 									/>
-									<label className={labelClass} htmlFor={option.value}>
+									<label
+										className={labelClass}
+										htmlFor={option.value}
+									>
 										{option.key}
 									</label>
 								</div>
@@ -39,7 +45,11 @@ export const CheckBox = (props) => {
 					</>
 				)}
 			</Field>
-			<ErrorMessage component="span" name={name} className={errorClass} />
+			<ErrorMessage
+				component="span"
+				name={name}
+				className={errorClass}
+			/>
 		</>
 	);
 };
@@ -73,7 +83,10 @@ export const CheckboxField = (props) => {
 						>
 							{options &&
 								options.map((option) => (
-									<div className={keyClass} key={option.value}>
+									<div
+										className={keyClass}
+										key={option.value}
+									>
 										<Checkbox value={option.value}>{option.key}</Checkbox>
 									</div>
 								))}
@@ -81,7 +94,11 @@ export const CheckboxField = (props) => {
 					);
 				}}
 			</Field>
-			<ErrorMessage component="span" name={name} className={errorClass} />
+			<ErrorMessage
+				component="span"
+				name={name}
+				className={errorClass}
+			/>
 		</>
 	);
 };
