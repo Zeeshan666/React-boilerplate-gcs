@@ -9,6 +9,12 @@ import RoutesConstant from "Routes/Constant";
 import bidShushi from "Services/Api/Api";
 import { LoginSvg } from "Common/Svg";
 import { FormControls } from "Components/InputFields/FormControls";
+import { ModalController } from "Components/Modal/ModalController";
+import {
+	modalConfigOne,
+	modalConfigTwo,
+	dirtyModalConfig,
+} from "Components/Modal/ModalConfig";
 
 const Index = () => {
 	const location = useLocation();
@@ -69,6 +75,7 @@ const Index = () => {
 		// 		" Checkbox: " +
 		// 		values.checkbox
 		// );
+		console.log(values);
 		const userData = {
 			email: email.trim().toLowerCase(),
 			password: password.trim(),
@@ -256,6 +263,11 @@ const Index = () => {
 								</Form>
 							)}
 						</Formik>
+						<div>
+							<ModalController modalConfig={modalConfigOne} />
+							<ModalController modalConfig={modalConfigTwo} />
+							<ModalController modalConfig={dirtyModalConfig} />
+						</div>
 					</div>
 				</div>
 			</main>
