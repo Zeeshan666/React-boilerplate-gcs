@@ -5,10 +5,7 @@ import AppHeader from "./Components/AppHeader";
 import SideMenu from "./Components/SideMenu";
 import { BidContextProvider } from "./Context/bidContext";
 import { useAuthContext } from "./hooks/useAuthContext";
-import { useEffect } from "react";
-import RoutesConstant from "./Routes/Constant";
-import UseInterval from "./Context/useInterval";
-import bidShushi from "./Services/Api/Api";
+
 
 function App() {
 

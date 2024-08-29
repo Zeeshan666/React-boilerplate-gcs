@@ -1,6 +1,5 @@
 import { BASE_URL } from "./Constant";
 import request from "../requests";
-import { BID_MANAGER_ROLE, EXTERNAL_ROLE } from "../../Common";
 
 function login(data) {
   return request({
@@ -94,13 +93,6 @@ function updateUserProfile(userId, data) {
   });
 }
 
-function deleteUser(id) {
-  return request({
-    url: `${BASE_URL}/users/softDeleteUser/${id}`,
-    method: "GET",
-  });
-}
-
 const bidShushi = {
   login,
   createUser,
@@ -109,11 +101,6 @@ const bidShushi = {
   verifyResetPasswordToken,
   updateUser,
   updateUserProfile,
-  getAppSettings,
-  deleteUser,
-  getBidStatuses,
-  getAllActiveUsers,
-  getAllUsers,
 };
 
 export default bidShushi;

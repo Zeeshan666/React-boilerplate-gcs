@@ -20,15 +20,16 @@ const Aauth = () => {
     to = `${RoutesConstant.login}`
   }
 
-  useEffect(()=>{
-    setLoad(true);
-   bidShushi.bidStatsDashboard().then((res)=>{
-    console.log(res)
-    setLoad(false);
-   }).catch(err=>{
-    console.log(err)
-   })
-  },[])
+  //will use in project
+  // useEffect(()=>{
+  //   setLoad(true);
+  //  bidShushi.bidStatsDashboard().then((res)=>{
+  //   console.log(res)
+  //   setLoad(false);
+  //  }).catch(err=>{
+  //   console.log(err)
+  //  })
+  // },[])
  
   return !load?user ? <Outlet /> : <Navigate to={to}/>:<div className="container">
       <div className="lds-ripple loader">
