@@ -38,7 +38,7 @@ export const DynamicModal = ({
 			}
 			{...modalProps}
 		>
-			{content}
+			{content&&content()}
 		</Modal>
 	);
 };
