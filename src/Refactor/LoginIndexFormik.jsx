@@ -2,20 +2,13 @@ import { Formik, Field, ErrorMessage, Form } from "formik";
 import { useEffect } from "react";
 import { notification } from "antd";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { LOGIN_ACTION, USER_ROLE } from "../Context/Actions";
-import { loginInitialValues, loginValidationSchema } from "../Formik/index";
-import RoutesConstant from "../Routes/Constant";
-import bidShushi from "../Services/Api/Api";
-import { LoginSvg } from "../Common/Svg";
-import { FormControls } from "../Components/InputFields/FormControls";
-
-/*
-	Formik sa direct state management and validation track hogi to:
-		onchange handler manually nahi likhna
-		validation manually nahi likhna to validateEmail and valldatePassword function nahi hounga
-		useffect sa jo preloading thi wo direct fomrik ma call hojai gi
-*/
+import { useAuthContext } from "hooks/useAuthContext";
+import { LOGIN_ACTION, USER_ROLE } from "Context/Actions";
+import { loginInitialValues, loginValidationSchema } from "Formik/index";
+import RoutesConstant from "Routes/Constant";
+import bidShushi from "Services/Api/Api";
+import { LoginSvg } from "Common/Svg";
+import { FormControls } from "Components/InputFields/FormControls";
 
 const Index = () => {
 	const location = useLocation();
@@ -56,10 +49,32 @@ const Index = () => {
 	// form submission handler
 	const handleSubmit = (values, { setSubmitting }) => {
 		const { email, password } = values;
+		// alert(
+		// 	"Email: " +
+		// 		email +
+		// 		" Password: " +
+		// 		password +
+		// 		" RememberMe: " +
+		// 		values.rememberMe +
+		// 		" Location: " +
+		// 		searchParams.get("location") +
+		// 		" Date of Birth: " +
+		// 		values.date +
+		// 		" Cities: " +
+		// 		values.selectedOption +
+		// 		" Gender: " +
+		// 		values.gender +
+		// 		" Description " +
+		// 		values.description +
+		// 		" Checkbox: " +
+		// 		values.checkbox
+		// );
 		const userData = {
 			email: email.trim().toLowerCase(),
 			password: password.trim(),
 		};
+
+		console.log(userData);
 
 		bidShushi
 			.login(userData)
@@ -67,6 +82,7 @@ const Index = () => {
 				if (values.rememberMe) {
 					localStorage.setItem("email", email);
 					localStorage.setItem("password", password);
+					console.log(res);
 				}
 				localStorage.setItem("user", JSON.stringify(res.user));
 				localStorage.setItem("bidshushi_tokens", JSON.stringify(res.tokens));
@@ -99,35 +115,55 @@ const Index = () => {
 							validationSchema={loginValidationSchema}
 							onSubmit={handleSubmit}
 						>
-							{({ isSubmitting, isValid }) => (
+							{({ isSubmitting, isValid, values }) => (
 								<Form>
-									<FormControls
-										control="input"
-										type="text"
-										name="email"
-										imgsrc="/images/user-icon.png"
-										placeholder="Enter Your Email"
-										tabIndex="1"
-										label="Username"
-									/>
-									<FormControls
-										control="input"
-										type="password"
-										name="password"
-										imgsrc="/images/key-icon.png"
-										placeholder="Enter Your Password"
-										tabIndex="2"
-										label="Password"
-									/>
-									<div className="row mb-2 mt-4">
+									<div className="form-group form-control">
 										<FormControls
-											control="checkbox"
-											name="rememberMe"
-											label="Remember Me"
-											tabIndex="3"
-											className="col-md-6"
-											options={[{ value: "rememberMe", key: "Remember Me" }]}
+											control="input"
+											type="text"
+											name="email"
+											imgsrc="/images/user-icon.png"
+											placeholder="Enter Your Email"
+											tabIndex="1"
+											label="Username"
+											labelClass="float-end"
+											fieldClass="form-control"
+											errorClass="text-danger"
 										/>
+									</div>
+									<div className="form-group form-control">
+										<FormControls
+											control="input"
+											type="password"
+											name="password"
+											imgsrc="/images/key-icon.png"
+											placeholder="Enter Your Password"
+											tabIndex="2"
+											label="Password"
+											labelClass="float-end"
+											fieldClass="form-control"
+											errorClass="text-danger"
+										/>
+									</div>
+									<div className="row mb-2 mt-4">
+										<div className="col-md-6">
+											<div className="form-group-check pt-0">
+												<FormControls
+													control="checkboxBool"
+													name="rememberMe"
+													label="Remember Me"
+													tabIndex="3"
+													options={[
+														{ key: "Remember Me", value: "rememberMe" },
+													]}
+													labelClass="form-check-label simple-label no-style"
+													keyClass="form-check form-check-inline"
+													fieldClass="form-check-input"
+													errorClass="text-danger"
+												/>
+											</div>
+										</div>
+
 										<div className="col-md-6 text-end">
 											<Link
 												to={RoutesConstant.forgotPassword}
@@ -136,6 +172,79 @@ const Index = () => {
 												Forgot Password?
 											</Link>
 										</div>
+									</div>
+									<div className="form-group form-control">
+										<FormControls
+											control="select"
+											name="selectedOption"
+											label="Select your fav city"
+											tabIndex="4"
+											placeholder="Select City"
+											options={[
+												{ key: "KHI", value: "karachi" },
+												{ key: "LHR", value: "lahore" },
+												{ key: "ISL", value: "islamabad" },
+												{ key: "PES", value: "peshawar" },
+											]}
+											fieldClass="form-control"
+											labelClass="float-end"
+											errorClass="text-danger"
+										/>
+									</div>
+									<div className="form-group form-control">
+										<FormControls
+											control="date"
+											label="Date"
+											name="date"
+											placeholder="Select Date"
+											tabIndex="5"
+											fieldClass="form-control"
+											labelClass="float-end"
+											errorClass="text-danger"
+										/>
+									</div>
+									<div className="form-group form-control">
+										<FormControls
+											control="radio"
+											name="gender"
+											label="Gender"
+											tabIndex="6"
+											options={[
+												{ key: "Male", value: "male" },
+												{ key: "Female", value: "female" },
+											]}
+											fieldClass="form-group form-control"
+											labelClass="float-end"
+											errorClass="text-danger"
+										/>
+									</div>
+									<div className="form-group form-control">
+										<FormControls
+											control="textarea"
+											name="description"
+											label="Description"
+											placeholder="Description"
+											tabIndex="7"
+											fieldClass="form-control"
+											labelClass="float-end"
+											errorClass="text-danger"
+										/>
+									</div>
+									<div className="form-group form-control">
+										<FormControls
+											control="checkbox"
+											name="checkbox"
+											label="Checkbox"
+											tabIndex="8"
+											options={[
+												{ key: "HTML/CSS", value: "html" },
+												{ key: "Javascript", value: "javascript" },
+												{ key: "ReactJS", value: "react" },
+											]}
+											fieldClass="form-control"
+											labelClass="float-end"
+											errorClass="text-danger"
+										/>
 									</div>
 									<button
 										type="submit"
