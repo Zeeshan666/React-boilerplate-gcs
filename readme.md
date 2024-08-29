@@ -6,7 +6,5 @@ The main features includes:
 - App Footer with static links
 - App Sidebar for pages routing using react-router-dom
 - API integration to fetch data from server
-- useAuth hooks for authentication
-- formik and yup for form validation
 
 
