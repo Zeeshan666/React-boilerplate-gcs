@@ -1,29 +1,26 @@
-import { Formik, Field, ErrorMessage, Form } from "formik";
-import { useEffect } from "react";
-import { notification } from "antd";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useAuthContext } from "hooks/useAuthContext";
-import { LOGIN_ACTION, USER_ROLE } from "Context/Actions";
-import { loginInitialValues, loginValidationSchema } from "Formik/index";
+import {Formik, Field, ErrorMessage, Form} from "formik";
+import {useEffect} from "react";
+import {notification} from "antd";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useAuthContext} from "hooks/useAuthContext";
+import {LOGIN_ACTION, USER_ROLE} from "Context/Actions";
+import {loginInitialValues, loginValidationSchema} from "Formik/index";
 import RoutesConstant from "Routes/Constant";
 import bidShushi from "Services/Api/Api";
-import { LoginSvg } from "Common/Svg";
-import { FormControls } from "Components/InputFields/FormControls";
-import { ModalController } from "Components/Modal/ModalController";
-import {
-	modalConfigOne,
-	modalConfigTwo,
-	dirtyModalConfig,
-} from "Components/Modal/ModalConfig";
+import {LoginSvg} from "Common/Svg";
+import {FormControls} from "Components/InputFields/FormControls";
+import {ModalController} from "Components/Modal/ModalController";
+import {modalConfigOne, modalConfigTwo, dirtyModalConfig} from "Components/Modal/ModalConfig";
+import DynamicTable from "Components/Table/DynamicTable";
 
 const Index = () => {
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const message = searchParams.get("message");
 
-	const { api, contextHolder } = notification.useNotification();
+	const {api, contextHolder} = notification.useNotification();
 
-	const { user, dispatch } = useAuthContext();
+	const {user, dispatch} = useAuthContext();
 	const navigate = useNavigate();
 
 	//Notifications messages
@@ -53,8 +50,8 @@ const Index = () => {
 	}, [user, message]);
 
 	// form submission handler
-	const handleSubmit = (values, { setSubmitting }) => {
-		const { email, password } = values;
+	const handleSubmit = (values, {setSubmitting}) => {
+		const {email, password} = values;
 		// alert(
 		// 	"Email: " +
 		// 		email +
@@ -93,8 +90,8 @@ const Index = () => {
 				}
 				localStorage.setItem("user", JSON.stringify(res.user));
 				localStorage.setItem("bidshushi_tokens", JSON.stringify(res.tokens));
-				dispatch({ type: LOGIN_ACTION, payload: res.user });
-				dispatch({ type: USER_ROLE, payload: res.user.userRole.name });
+				dispatch({type: LOGIN_ACTION, payload: res.user});
+				dispatch({type: USER_ROLE, payload: res.user.userRole.name});
 				const locationParam = searchParams.get("location");
 				navigate(locationParam ? `/${locationParam}` : RoutesConstant.main);
 			})
@@ -122,7 +119,7 @@ const Index = () => {
 							validationSchema={loginValidationSchema}
 							onSubmit={handleSubmit}
 						>
-							{({ isSubmitting, isValid, values }) => (
+							{({isSubmitting, isValid, values}) => (
 								<Form>
 									<div className="form-group form-control">
 										<FormControls
@@ -160,9 +157,7 @@ const Index = () => {
 													name="rememberMe"
 													label="Remember Me"
 													tabIndex="3"
-													options={[
-														{ key: "Remember Me", value: "rememberMe" },
-													]}
+													options={[{key: "Remember Me", value: "rememberMe"}]}
 													labelClass="form-check-label simple-label no-style"
 													keyClass="form-check form-check-inline"
 													fieldClass="form-check-input"
@@ -188,10 +183,10 @@ const Index = () => {
 											tabIndex="4"
 											placeholder="Select City"
 											options={[
-												{ key: "KHI", value: "karachi" },
-												{ key: "LHR", value: "lahore" },
-												{ key: "ISL", value: "islamabad" },
-												{ key: "PES", value: "peshawar" },
+												{key: "KHI", value: "karachi"},
+												{key: "LHR", value: "lahore"},
+												{key: "ISL", value: "islamabad"},
+												{key: "PES", value: "peshawar"},
 											]}
 											fieldClass="form-control"
 											labelClass="float-end"
@@ -217,8 +212,8 @@ const Index = () => {
 											label="Gender"
 											tabIndex="6"
 											options={[
-												{ key: "Male", value: "male" },
-												{ key: "Female", value: "female" },
+												{key: "Male", value: "male"},
+												{key: "Female", value: "female"},
 											]}
 											fieldClass="form-group form-control"
 											labelClass="float-end"
@@ -244,9 +239,9 @@ const Index = () => {
 											label="Checkbox"
 											tabIndex="8"
 											options={[
-												{ key: "HTML/CSS", value: "html" },
-												{ key: "Javascript", value: "javascript" },
-												{ key: "ReactJS", value: "react" },
+												{key: "HTML/CSS", value: "html"},
+												{key: "Javascript", value: "javascript"},
+												{key: "ReactJS", value: "react"},
 											]}
 											fieldClass="form-control"
 											labelClass="float-end"
@@ -271,6 +266,9 @@ const Index = () => {
 					</div>
 				</div>
 			</main>
+			<div>
+				<DynamicTable />
+			</div>
 		</section>
 	);
 };
