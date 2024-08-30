@@ -1,5 +1,15 @@
 import React, {useState, useEffect} from "react"
-import {Table, Input, Button, Select, Space, Divider, Checkbox, Menu, Dropdown} from "antd"
+import {
+	Table,
+	Input,
+	Button,
+	Select,
+	Space,
+	Divider,
+	Checkbox,
+	Menu,
+	Dropdown,
+} from "antd"
 import {SearchOutlined} from "@ant-design/icons"
 import {initialData, getColumnDefinitions} from "./TestDataCols"
 
@@ -8,24 +18,30 @@ const {Column} = Table
 
 const DynamicTable = () => {
 	const [data, setData] = useState([])
+	const columnDefinitions = getColumnDefinitions(initialData)
+	const columnKeys = columnDefinitions.map((col) => col.key)
 	const [searchText, setSearchText] = useState("")
 	const [pagination, setPagination] = useState({current: 1, pageSize: 10})
 	const [sorter, setSorter] = useState({})
-	const [visibleColumns, setVisibleColumns] = useState(["name", "age", "address"])
-	const columnDefinitions = getColumnDefinitions(data)
-	const columnKeys = columnDefinitions.map((col) => col.key)
+	const [visibleColumns, setVisibleColumns] = useState([])
 
 	const validateAndReplaceData = (data, columnKeys) => {
 		return data.map((item) => {
 			const newItem = {...item}
 
 			columnKeys.forEach((key) => {
-				if (newItem[key] === undefined || newItem[key] === null) newItem[key] = "*"
-				if (typeof newItem[key] === "number" && isNaN(newItem[key])) newItem[key] = "-"
-				if (typeof newItem[key] === "string" && newItem[key].trim() === "") newItem[key] = "-"
-				if (typeof newItem[key] === "object") newItem[key] = JSON.stringify(newItem[key])
-				if (typeof newItem[key] === "boolean") newItem[key] = newItem[key] ? "true" : "false"
-				if (typeof newItem[key] === "number") newItem[key] = newItem[key].toString()
+				if (newItem[key] === undefined || newItem[key] === null)
+					newItem[key] = "*"
+				if (typeof newItem[key] === "number" && isNaN(newItem[key]))
+					newItem[key] = "-"
+				if (typeof newItem[key] === "string" && newItem[key].trim() === "")
+					newItem[key] = "-"
+				if (typeof newItem[key] === "object")
+					newItem[key] = JSON.stringify(newItem[key])
+				if (typeof newItem[key] === "boolean")
+					newItem[key] = newItem[key] ? "true" : "false"
+				if (typeof newItem[key] === "number")
+					newItem[key] = newItem[key].toString()
 			})
 
 			return newItem
@@ -34,7 +50,9 @@ const DynamicTable = () => {
 
 	useEffect(() => {
 		const validatedData = validateAndReplaceData(initialData, columnKeys)
+
 		setData(validatedData)
+		setVisibleColumns(columnKeys)
 	}, [])
 
 	const handleSearch = (value) => {
@@ -47,7 +65,11 @@ const DynamicTable = () => {
 	}
 
 	const handleColumnToggle = (key) => {
-		setVisibleColumns((prev) => (prev.includes(key) ? prev.filter((colKey) => colKey !== key) : [...prev, key]))
+		setVisibleColumns((prev) =>
+			prev.includes(key)
+				? prev.filter((colKey) => colKey !== key)
+				: [...prev, key]
+		)
 	}
 
 	const columnMenu = (
@@ -67,7 +89,12 @@ const DynamicTable = () => {
 
 	const getFilteredData = () => {
 		return data.filter((item) => {
-			return columnKeys.some((key) => (item[key] || "").toString().toLowerCase().includes(searchText.toLowerCase()))
+			return columnKeys.some((key) =>
+				(item[key] || "")
+					.toString()
+					.toLowerCase()
+					.includes(searchText.toLowerCase())
+			)
 		})
 	}
 
@@ -116,10 +143,15 @@ const DynamicTable = () => {
 								dataIndex={col.dataIndex}
 								key={col.key}
 								sorter={(a, b) => {
-									if (typeof a[col.key] === "number" && typeof b[col.key] === "number") {
+									if (
+										typeof a[col.key] === "number" &&
+										typeof b[col.key] === "number"
+									) {
 										return a[col.key] - b[col.key]
 									}
-									return (a[col.key] || "").toString().localeCompare((b[col.key] || "").toString())
+									return (a[col.key] || "")
+										.toString()
+										.localeCompare((b[col.key] || "").toString())
 								}}
 								sortOrder={sorter.columnKey === col.key && sorter.order}
 							/>
