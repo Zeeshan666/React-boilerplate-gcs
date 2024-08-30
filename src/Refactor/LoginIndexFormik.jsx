@@ -1,33 +1,37 @@
-import {Formik, Field, ErrorMessage, Form} from "formik";
-import {useEffect} from "react";
-import {notification} from "antd";
-import {Link, useNavigate, useLocation} from "react-router-dom";
-import {useAuthContext} from "hooks/useAuthContext";
-import {LOGIN_ACTION, USER_ROLE} from "Context/Actions";
-import {loginInitialValues, loginValidationSchema} from "Formik/index";
-import RoutesConstant from "Routes/Constant";
-import bidShushi from "Services/Api/Api";
-import {LoginSvg} from "Common/Svg";
-import {FormControls} from "Components/InputFields/FormControls";
-import {ModalController} from "Components/Modal/ModalController";
-import {modalConfigOne, modalConfigTwo, dirtyModalConfig} from "Components/Modal/ModalConfig";
-import DynamicTable from "Components/Table/DynamicTable";
+import {Formik, Field, ErrorMessage, Form} from "formik"
+import {useEffect} from "react"
+import {notification} from "antd"
+import {Link, useNavigate, useLocation} from "react-router-dom"
+import {useAuthContext} from "hooks/useAuthContext"
+import {LOGIN_ACTION, USER_ROLE} from "Context/Actions"
+import {loginInitialValues, loginValidationSchema} from "Formik/index"
+import RoutesConstant from "Routes/Constant"
+import bidShushi from "Services/Api/Api"
+import {LoginSvg} from "Common/Svg"
+import {FormControls} from "Components/InputFields/FormControls"
+import {ModalController} from "Components/Modal/ModalController"
+import {
+	modalConfigOne,
+	modalConfigTwo,
+	dirtyModalConfig,
+} from "Components/Modal/ModalConfig"
+import {DynamicTable} from "Components/Table/DynamicTable"
 
 const Index = () => {
-	const location = useLocation();
-	const searchParams = new URLSearchParams(location.search);
-	const message = searchParams.get("message");
+	const location = useLocation()
+	const searchParams = new URLSearchParams(location.search)
+	const message = searchParams.get("message")
 
-	const {api, contextHolder} = notification.useNotification();
+	const {api, contextHolder} = notification.useNotification()
 
-	const {user, dispatch} = useAuthContext();
-	const navigate = useNavigate();
+	const {user, dispatch} = useAuthContext()
+	const navigate = useNavigate()
 
 	//Notifications messages
 	const ERROR_MESSAGES = {
 		loginFailed: "Login Failed",
 		tokenExpired: "Token Expired. This link has already been used or expired.",
-	};
+	}
 
 	//Notifications
 	const handleTokenExpiredNotification = () => {
@@ -36,22 +40,22 @@ const Index = () => {
 				message: ERROR_MESSAGES.tokenExpired,
 				description: "This link has already been used or expired.",
 				placement: "topRight",
-			});
+			})
 		}
-	};
+	}
 
 	useEffect(() => {
 		if (user) {
 			//If user is already logged in navigate to main page
-			navigate(RoutesConstant.main);
+			navigate(RoutesConstant.main)
 		}
 		//If login session is expired show notification
-		handleTokenExpiredNotification();
-	}, [user, message]);
+		handleTokenExpiredNotification()
+	}, [user, message])
 
 	// form submission handler
 	const handleSubmit = (values, {setSubmitting}) => {
-		const {email, password} = values;
+		const {email, password} = values
 		// alert(
 		// 	"Email: " +
 		// 		email +
@@ -72,39 +76,39 @@ const Index = () => {
 		// 		" Checkbox: " +
 		// 		values.checkbox
 		// );
-		console.log(values);
+		console.log(values)
 		const userData = {
 			email: email.trim().toLowerCase(),
 			password: password.trim(),
-		};
+		}
 
-		console.log(userData);
+		console.log(userData)
 
 		bidShushi
 			.login(userData)
 			.then((res) => {
 				if (values.rememberMe) {
-					localStorage.setItem("email", email);
-					localStorage.setItem("password", password);
-					console.log(res);
+					localStorage.setItem("email", email)
+					localStorage.setItem("password", password)
+					console.log(res)
 				}
-				localStorage.setItem("user", JSON.stringify(res.user));
-				localStorage.setItem("bidshushi_tokens", JSON.stringify(res.tokens));
-				dispatch({type: LOGIN_ACTION, payload: res.user});
-				dispatch({type: USER_ROLE, payload: res.user.userRole.name});
-				const locationParam = searchParams.get("location");
-				navigate(locationParam ? `/${locationParam}` : RoutesConstant.main);
+				localStorage.setItem("user", JSON.stringify(res.user))
+				localStorage.setItem("bidshushi_tokens", JSON.stringify(res.tokens))
+				dispatch({type: LOGIN_ACTION, payload: res.user})
+				dispatch({type: USER_ROLE, payload: res.user.userRole.name})
+				const locationParam = searchParams.get("location")
+				navigate(locationParam ? `/${locationParam}` : RoutesConstant.main)
 			})
 			.catch((err) => {
 				api.error({
 					message: ERROR_MESSAGES.loginFailed,
 					description: err?.message,
 					placement: "topRight",
-				});
-				console.log(err);
+				})
+				console.log(err)
 			})
-			.finally(() => setSubmitting(false));
-	};
+			.finally(() => setSubmitting(false))
+	}
 
 	return (
 		<section className="account-wrapper">
@@ -270,6 +274,6 @@ const Index = () => {
 				<DynamicTable />
 			</div>
 		</section>
-	);
-};
-export default Index;
+	)
+}
+export default Index

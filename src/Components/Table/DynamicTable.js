@@ -1,22 +1,18 @@
 import React, {useState, useEffect} from "react"
-import {
-	Table,
-	Input,
-	Button,
-	Select,
-	Space,
-	Divider,
-	Checkbox,
-	Menu,
-	Dropdown,
-} from "antd"
-import {SearchOutlined} from "@ant-design/icons"
+import {Table, Divider} from "antd"
 import {initialData, getColumnDefinitions} from "./TestDataCols"
+import {TableHeader} from "./TableHeader"
+import {
+	validateAndReplaceData,
+	getFilteredData,
+	handleSearch,
+	handleTableChange,
+	handleColumnToggle,
+} from "./TableUtils"
 
-const {Option} = Select
 const {Column} = Table
 
-const DynamicTable = () => {
+export const DynamicTable = () => {
 	const [data, setData] = useState([])
 	const columnDefinitions = getColumnDefinitions(initialData)
 	const columnKeys = columnDefinitions.map((col) => col.key)
@@ -25,29 +21,6 @@ const DynamicTable = () => {
 	const [sorter, setSorter] = useState({})
 	const [visibleColumns, setVisibleColumns] = useState([])
 
-	const validateAndReplaceData = (data, columnKeys) => {
-		return data.map((item) => {
-			const newItem = {...item}
-
-			columnKeys.forEach((key) => {
-				if (newItem[key] === undefined || newItem[key] === null)
-					newItem[key] = "*"
-				if (typeof newItem[key] === "number" && isNaN(newItem[key]))
-					newItem[key] = "-"
-				if (typeof newItem[key] === "string" && newItem[key].trim() === "")
-					newItem[key] = "-"
-				if (typeof newItem[key] === "object")
-					newItem[key] = JSON.stringify(newItem[key])
-				if (typeof newItem[key] === "boolean")
-					newItem[key] = newItem[key] ? "true" : "false"
-				if (typeof newItem[key] === "number")
-					newItem[key] = newItem[key].toString()
-			})
-
-			return newItem
-		})
-	}
-
 	useEffect(() => {
 		const validatedData = validateAndReplaceData(initialData, columnKeys)
 
@@ -55,81 +28,28 @@ const DynamicTable = () => {
 		setVisibleColumns(columnKeys)
 	}, [])
 
-	const handleSearch = (value) => {
-		setSearchText(value)
-	}
-
-	const handleTableChange = (pagination, filters, sorter) => {
-		setPagination(pagination)
-		setSorter(sorter)
-	}
-
-	const handleColumnToggle = (key) => {
-		setVisibleColumns((prev) =>
-			prev.includes(key)
-				? prev.filter((colKey) => colKey !== key)
-				: [...prev, key]
-		)
-	}
-
-	const columnMenu = (
-		<Menu>
-			{columnDefinitions.map((col) => (
-				<Menu.Item key={col.key}>
-					<Checkbox
-						checked={visibleColumns.includes(col.key)}
-						onChange={() => handleColumnToggle(col.key)}
-					>
-						{col.title}
-					</Checkbox>
-				</Menu.Item>
-			))}
-		</Menu>
-	)
-
-	const getFilteredData = () => {
-		return data.filter((item) => {
-			return columnKeys.some((key) =>
-				(item[key] || "")
-					.toString()
-					.toLowerCase()
-					.includes(searchText.toLowerCase())
-			)
-		})
-	}
-
-	const filteredData = getFilteredData()
+	const filteredData = getFilteredData(data, columnKeys, searchText)
 
 	return (
-		<div>
-			<Space style={{marginBottom: 16}}>
-				<Input
-					placeholder="Search"
-					value={searchText}
-					onChange={(e) => handleSearch(e.target.value)}
-					prefix={<SearchOutlined />}
-					style={{width: 200}}
-				/>
-				<Select
-					defaultValue={pagination.pageSize}
-					onChange={(value) => setPagination({...pagination, pageSize: value})}
-					style={{width: 120}}
-				>
-					<Option value={1}>1</Option>
-					<Option value={2}>2</Option>
-					<Option value={5}>5</Option>
-					<Option value={10}>10</Option>
-					<Option value={20}>20</Option>
-				</Select>
-				<Dropdown overlay={columnMenu}>
-					<Button>Toggle Columns</Button>
-				</Dropdown>
-			</Space>
+		<>
+			<TableHeader
+				searchText={searchText}
+				handleSearch={(value) => handleSearch(value, setSearchText)}
+				pagination={pagination}
+				setPagination={setPagination}
+				columnDefinitions={columnDefinitions}
+				visibleColumns={visibleColumns}
+				handleColumnToggle={(key) =>
+					handleColumnToggle(key, visibleColumns, setVisibleColumns)
+				}
+			/>
 
 			<Table
 				dataSource={filteredData}
 				pagination={pagination}
-				onChange={handleTableChange}
+				onChange={(pagination, filters, sorter) =>
+					handleTableChange(pagination, setPagination, sorter, setSorter)
+				}
 				rowKey="key"
 				sortDirections={["ascend", "descend"]}
 				loading={false}
@@ -160,8 +80,6 @@ const DynamicTable = () => {
 			</Table>
 
 			<Divider />
-		</div>
+		</>
 	)
 }
-
-export default DynamicTable
