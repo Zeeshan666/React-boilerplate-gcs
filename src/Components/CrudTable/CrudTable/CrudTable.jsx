@@ -1,7 +1,7 @@
 import React from "react"
 import {optionalFeature, initialData} from "./InitialValues"
 import {DynamicTable} from "../../Table/DynamicTable"
-import {ModalProvider} from "../ModalContext"
+import {ModalProvider} from "../../../Context/ModalContext"
 
 function CrudTable() {
 	return (
