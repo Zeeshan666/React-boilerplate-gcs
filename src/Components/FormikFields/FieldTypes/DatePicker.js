@@ -2,6 +2,7 @@ import React from "react"
 import {DatePicker as AntDatePicker} from "antd"
 import {Field, ErrorMessage} from "formik"
 import moment from "moment"
+import dayjs from "dayjs"
 
 const dateFormat = "DD/MM/YYYY" // Default date format
 
@@ -26,12 +27,16 @@ export const DatePicker = ({
 					return (
 						<AntDatePicker
 							id={name}
-							{...rest}
 							format={format}
-							value={value ? moment(value, format, true) : null}
-							onChange={(date) =>
+							// value={value ? moment(value, format, true) : null}
+							// onChange={(date) =>
+							// 	setFieldValue(name, date ? moment(date).format(format) : null)
+							// }
+							value={value ? dayjs(value, format, true) : null}
+							onChange={(date) => {
 								setFieldValue(name, date ? date.format(format) : null)
-							}
+							}}
+							{...rest}
 						/>
 					)
 				}}

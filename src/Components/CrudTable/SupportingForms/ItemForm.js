@@ -9,6 +9,7 @@ import {
 	dateFormat,
 } from "./supportingValues"
 import {FormControls} from "Components/FormikFields/FormControls"
+import dayjs from "dayjs"
 
 const fieldStyle = {marginBottom: 16}
 
@@ -23,9 +24,13 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 				.map((tag) => tag.trim()) // Trim each tag
 		: []
 
-	// Parse the joiningDate from string to moment object using "DD/MM/YYYY"
+	// // Parse the joiningDate from string to moment object using "DD/MM/YYYY"
+	// const initialDate = initialValues.joiningDate
+	// 	? moment(initialValues.joiningDate, dateFormat, true) // `true` for strict parsing
+	// 	: null
+
 	const initialDate = initialValues.joiningDate
-		? moment(initialValues.joiningDate, dateFormat, true) // `true` for strict parsing
+		? dayjs(initialValues.joiningDate, dateFormat, true) // `true` for strict parsing
 		: null
 
 	return (
@@ -38,9 +43,12 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 			onSubmit={(values, {resetForm}) => {
 				const formattedValues = {
 					...values,
-					joiningDate: values.joiningDate
-						? moment(values.joiningDate).format(dateFormat) // Ensure "DD/MM/YYYY"
-						: null,
+					// joiningDate: values.joiningDate
+					// 	? moment(values.joiningDate).format(dateFormat) // Ensure "DD/MM/YYYY"
+					// 	: null,
+					// joiningDate: values.joiningDate
+					// 	? dayjs(values.joiningDate).format(dateFormat) // Ensure "DD/MM/YYYY"
+					// 	: null,
 				}
 				onSubmit(formattedValues)
 				resetForm() // Reset form fields after submission
@@ -126,8 +134,19 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 						placeholder="Enter Joining Date"
 						format={dateFormat} // Default format
 						style={fieldStyle}
+						// onChange={(date) => {
+						// 	// Pass the date value formatted as per the dateFormat
+						// 	setFieldValue(
+						// 		"joiningDate",
+						// 		date ? date.format(dateFormat) : null
+						// 	)
+						// }}
+						// value={
+						// 	values.joiningDate
+						// 		? moment(values.joiningDate, dateFormat, true)
+						// 		: null
+						// }
 						onChange={(date) => {
-							// Pass the date value formatted as per the dateFormat
 							setFieldValue(
 								"joiningDate",
 								date ? date.format(dateFormat) : null
@@ -135,7 +154,7 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 						}}
 						value={
 							values.joiningDate
-								? moment(values.joiningDate, dateFormat, true)
+								? dayjs(values.joiningDate, dateFormat, true)
 								: null
 						}
 					/>
