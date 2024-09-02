@@ -1,5 +1,4 @@
-import AddItemForm from "./SupportingForms/AddItemForm"
-import EditItemForm from "./SupportingForms/EditItemForm"
+import ItemForm from "./SupportingForms/ItemForm"
 
 export const deleteModalConfig = (onDelete) => ({
 	title: "Delete Confirmation",
@@ -29,9 +28,9 @@ export const deleteModalConfig = (onDelete) => ({
 })
 
 export const addModalConfig = (onAdd) => ({
-	title: "AddItem",
+	title: "Add Item",
 	content: () => (
-		<AddItemForm
+		<ItemForm
 			initialValues={{
 				firstName: "",
 				lastName: "",
@@ -43,7 +42,8 @@ export const addModalConfig = (onAdd) => ({
 				tags: [],
 				comments: "",
 			}}
-			onAdd={onAdd}
+			onSubmit={onAdd}
+			isEditMode={false}
 		/>
 	),
 	buttons: [
@@ -60,23 +60,25 @@ export const addModalConfig = (onAdd) => ({
 	},
 })
 
-export const editModalConfig = (initialValues, onSave) => {
-	return {
-		title: "Edit Item",
-		content: () => (
-			<EditItemForm initialValues={initialValues} onSave={onSave} />
-		),
-		buttons: [
-			{
-				text: "Cancel",
-				type: "default",
-				onClick: () => console.log("Edit Cancelled"),
-				closeOnClick: true,
-			},
-		],
-		modalProps: {
-			centered: true,
-			width: 500,
+export const editModalConfig = (initialValues, onSave) => ({
+	title: "Edit Item",
+	content: () => (
+		<ItemForm
+			initialValues={initialValues}
+			onSubmit={onSave}
+			isEditMode={true}
+		/>
+	),
+	buttons: [
+		{
+			text: "Cancel",
+			type: "default",
+			onClick: () => console.log("Edit Cancelled"),
+			closeOnClick: true,
 		},
-	}
-}
+	],
+	modalProps: {
+		centered: true,
+		width: 500,
+	},
+})

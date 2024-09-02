@@ -8,11 +8,11 @@ import {
 	jobTypeOptions,
 	dateFormat,
 } from "./supportingValues"
-import {FormControls} from "../../../FormikFields/FormControls"
+import {FormControls} from "Components/FormikFields/FormControls"
 
 const fieldStyle = {marginBottom: 16}
 
-const EditItemForm = ({initialValues, onSave}) => {
+const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 	// Clean the tags array or string
 	const cleanTags = Array.isArray(initialValues.tags)
 		? initialValues.tags.map((tag) => tag.trim())
@@ -41,7 +41,7 @@ const EditItemForm = ({initialValues, onSave}) => {
 						? moment(values.joiningDate).format(dateFormat) // Use the specified format
 						: null,
 				}
-				onSave(formattedValues)
+				onSubmit(formattedValues)
 				resetForm() // Reset form fields after submission
 			}}
 			validationSchema={validationSchema}
@@ -83,7 +83,7 @@ const EditItemForm = ({initialValues, onSave}) => {
 						options={genderOptions}
 						style={fieldStyle}
 					/>
-					<br></br>
+					<br />
 					<FormControls
 						control="checkbox"
 						name="tags"
@@ -93,10 +93,10 @@ const EditItemForm = ({initialValues, onSave}) => {
 						style={fieldStyle}
 						onChange={(values) => {
 							const cleanedValues = values.map((tag) => tag.trim())
-							setFieldValue(field.name, cleanedValues)
+							setFieldValue("tags", cleanedValues)
 						}}
 					/>
-					<br></br>
+					<br />
 					<FormControls
 						control="select"
 						name="jobType"
@@ -106,7 +106,7 @@ const EditItemForm = ({initialValues, onSave}) => {
 						options={jobTypeOptions}
 						style={fieldStyle}
 					/>
-					<br></br>
+					<br />
 					<FormControls
 						control="textarea"
 						name="comments"
@@ -137,9 +137,9 @@ const EditItemForm = ({initialValues, onSave}) => {
 								: null
 						}
 					/>
-					<br></br>
+					<br />
 					<Button type="primary" htmlType="submit">
-						Save Changes
+						{isEditMode ? "Save Changes" : "Add"}
 					</Button>
 				</Form>
 			)}
@@ -147,4 +147,4 @@ const EditItemForm = ({initialValues, onSave}) => {
 	)
 }
 
-export default EditItemForm
+export default ItemForm
