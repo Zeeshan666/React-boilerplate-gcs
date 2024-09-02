@@ -4,18 +4,10 @@ import {notification} from "antd"
 import {Link, useNavigate, useLocation} from "react-router-dom"
 import {useAuthContext} from "hooks/useAuthContext"
 import {LOGIN_ACTION, USER_ROLE} from "Context/Actions"
-import {loginInitialValues, loginValidationSchema} from "Formik/index"
+
 import RoutesConstant from "Routes/Constant"
 import bidShushi from "Services/Api/Api"
 import {LoginSvg} from "Common/Svg"
-import {FormControls} from "Components/InputFields/FormControls"
-import {ModalController} from "Components/Modal/ModalController"
-import {
-	modalConfigOne,
-	modalConfigTwo,
-	dirtyModalConfig,
-} from "Components/Modal/ModalConfig"
-import {DynamicTable} from "Components/Table/DynamicTable"
 
 const Index = () => {
 	const location = useLocation()
@@ -118,7 +110,7 @@ const Index = () => {
 					<div className="login-form-wrapper mt-3">
 						<LoginSvg />
 						<h1>Login to Your Account</h1>
-						<Formik
+						{/* <Formik
 							initialValues={loginInitialValues}
 							validationSchema={loginValidationSchema}
 							onSubmit={handleSubmit}
@@ -266,7 +258,7 @@ const Index = () => {
 							<ModalController modalConfig={modalConfigOne} />
 							<ModalController modalConfig={modalConfigTwo} />
 							<ModalController modalConfig={dirtyModalConfig} />
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</main>

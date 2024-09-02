@@ -1,8 +1,8 @@
-import React from "react";
-import { Field, ErrorMessage } from "formik";
-import { Select } from "antd";
+import React from "react"
+import {Field, ErrorMessage} from "formik"
+import {Select} from "antd"
 
-const { Option } = Select;
+const {Option} = Select
 
 export const SelectField = (props) => {
 	const {
@@ -10,12 +10,12 @@ export const SelectField = (props) => {
 		name,
 		options,
 		placeholder = "Select an option",
-		mode = "multiple",
+		mode,
 		labelClass,
 		fieldClass,
 		errorClass,
 		...rest
-	} = props;
+	} = props
 
 	return (
 		<>
@@ -23,8 +23,8 @@ export const SelectField = (props) => {
 				{label}
 			</label>
 			<Field name={name} className={fieldClass}>
-				{({ field, form }) => {
-					const { setFieldValue, setFieldTouched } = form;
+				{({field, form}) => {
+					const {setFieldValue, setFieldTouched} = form
 
 					return (
 						<Select
@@ -33,19 +33,19 @@ export const SelectField = (props) => {
 							value={field.value || []}
 							onChange={(val) => setFieldValue(name, val)}
 							onBlur={() => setFieldTouched(name, true)}
-							style={{ width: "100%" }} // Ensure full width for the select
+							style={{width: "100%"}} // Ensure full width for the select
 						>
 							{options &&
 								options.map((option) => (
 									<Option key={option.value} value={option.value}>
-										{option.key}
+										{option.label}
 									</Option>
 								))}
 						</Select>
-					);
+					)
 				}}
 			</Field>
 			<ErrorMessage component="span" name={name} className={errorClass} />
 		</>
-	);
-};
+	)
+}

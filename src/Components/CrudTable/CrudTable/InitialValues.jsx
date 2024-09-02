@@ -1,7 +1,9 @@
-import {tableStyles1} from "./Table/Styling/TableStyles"
-import {columnStyles1} from "./Table/Styling/ColumnStyles"
+import {tableStyles1} from "./Styling/TableStyles"
+import {columnStyles1} from "./Styling/ColumnStyles"
 import {v4 as uuidv4} from "uuid"
 import * as Yup from "yup"
+import {editModalConfig, addModalConfig, deleteModalConfig} from "./ModalConfig"
+import {dateFormat} from "./SupportingForms/supportingValues"
 
 export const initialData = [
 	{
@@ -44,8 +46,11 @@ export const optionalFeature = {
 	toggleColumnVisibility: true,
 	paginationValues: [1, 20, 30],
 	enableEdit: true,
+	editModalConfig: editModalConfig,
 	enableDelete: true,
+	deleteModalConfig: deleteModalConfig,
 	enableAdd: true,
+	addModalConfig: addModalConfig,
 	styling: {
 		table: tableStyles1,
 		column: columnStyles1,
@@ -83,7 +88,7 @@ export const validationSchema = Yup.object().shape({
 		.required("Joining date is required")
 		.matches(
 			/^\d{2}\/\d{2}\/\d{4}$/,
-			"Joining date must be in the format DD/MM/YYYY"
+			`Joining date must be in the format ${dateFormat}`
 		)
 		.test("valid-date", "Joining date must be a valid date", (value) => {
 			const dateParts = value.split("/")

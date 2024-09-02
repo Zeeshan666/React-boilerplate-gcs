@@ -12,6 +12,7 @@ import {
 	sortData,
 } from "./TableUtils"
 import {handleEdit, handleDelete, handleAdd} from "./TableActions"
+import {useModal} from "../../Context/ModalContext"
 import {ModalController} from "../Modal/ModalController"
 
 const {Column} = Table
@@ -25,8 +26,8 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 	})
 	const [sorter, setSorter] = useState({})
 	const [visibleColumns, setVisibleColumns] = useState([])
-	const [modalConfig, setModalConfig] = useState(null)
-	const [isModalVisible, setIsModalVisible] = useState(false)
+
+	const {isModalVisible, modalConfig, showModal, hideModal} = useModal()
 
 	const columnDefinitions = getColumnDefiniton(initialData)
 	const columnKeys = columnDefinitions.map((col) => col.key)
@@ -42,17 +43,8 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 	useEffect(() => {
 		filteredData = getFilteredData(data, columnKeys, searchText)
 	}, [data])
+
 	const {enableEdit, enableDelete, enableAdd, styling} = optionalFeature
-
-	const showModal = (config) => {
-		setModalConfig(config)
-		setIsModalVisible(true)
-	}
-
-	const hideModal = () => {
-		setIsModalVisible(false)
-		setModalConfig(null)
-	}
 
 	return (
 		<>
@@ -64,6 +56,7 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 					setPagination={setPaginationValue}
 					columnDefinitions={columnDefinitions}
 					visibleColumns={visibleColumns}
+					setData={setData}
 					handleColumnToggle={(key) =>
 						handleColumnToggle(key, visibleColumns, setVisibleColumns)
 					}
@@ -93,45 +86,20 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 								visibleColumns.includes(col.key) && (
 									<Column
 										title={
-											<span style={styling?.column.header}>{col.title}</span>
+											<span style={styling?.column[col.key]?.headerStyle || {}}>
+												{col.title}
+											</span>
 										}
 										dataIndex={col.dataIndex}
 										key={col.key}
 										sorter={(a, b) => sortData(a, b, col.key)}
 										sortOrder={sorter.columnKey === col.key && sorter.order}
-										render={(text) => {
-											if (Array.isArray(text)) {
-												return (
-													<div>
-														{text.map((item, index) => (
-															<span key={index} style={styling?.column?.span}>
-																{item}
-															</span>
-														))}
-													</div>
-												)
-											}
-
-											try {
-												const parsed = JSON.parse(text)
-												if (Array.isArray(parsed)) {
-													return (
-														<div>
-															{parsed.map((item, index) => (
-																<span key={index} style={styling?.column?.span}>
-																	{item}
-																</span>
-															))}
-														</div>
-													)
-												}
-											} catch (e) {
-												// Handle any JSON parsing errors
-											}
-
-											return <span style={styling?.column?.text}>{text}</span>
-										}}
-										style={styling?.column.cell} // Apply cell styles
+										render={(text, record) =>
+											styling?.column[col.key]?.render(text, record) || (
+												<span>{text}</span>
+											)
+										}
+										style={styling?.column[col.key]?.cellStyle || {}} // Apply cell styles
 									/>
 								)
 						)}
@@ -148,7 +116,13 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 											icon={<EditFilled />}
 											style={{marginRight: 8}}
 											onClick={() =>
-												handleEdit(showModal, record, setData, hideModal)
+												handleEdit(
+													showModal,
+													record,
+													setData,
+													hideModal,
+													optionalFeature.editModalConfig
+												)
 											}
 										>
 											Edit
@@ -160,7 +134,12 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 											icon={<DeleteFilled />}
 											type="primary"
 											onClick={() =>
-												handleDelete(showModal, record.key, setData)
+												handleDelete(
+													showModal,
+													record.key,
+													setData,
+													optionalFeature.deleteModalConfig
+												)
 											}
 										>
 											Delete
@@ -179,7 +158,14 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 							color: "black",
 							backgroundColor: "#bae637",
 						}}
-						onClick={() => handleAdd(showModal, setData, hideModal)}
+						onClick={() =>
+							handleAdd(
+								showModal,
+								setData,
+								hideModal,
+								optionalFeature.addModalConfig
+							)
+						}
 					>
 						Add Record
 					</Button>

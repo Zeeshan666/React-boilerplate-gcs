@@ -4,8 +4,8 @@ import App from "../App"
 import RoutesConstant from "./Constant"
 import {useAuthContext} from "../hooks/useAuthContext"
 
-// const Login = lazy(() => import("../Pages/Login"));
-const Login = lazy(() => import("../Refactor/LoginIndexFormik"))
+const Login = lazy(() => import("../Pages/Login"))
+// const Login = lazy(() => import("../Refactor/LoginIndexFormik"))
 const Update = lazy(() => import("../Pages/Update"))
 const UpdateSuccess = lazy(() => import("../Pages/Update/Success"))
 const Forgot = lazy(() => import("../Pages/Forgot"))

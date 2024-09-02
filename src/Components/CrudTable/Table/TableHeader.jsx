@@ -1,6 +1,7 @@
 import React from "react"
 import {Input, Button, Select, Space, Dropdown, Menu, Checkbox} from "antd"
 import {SearchOutlined} from "@ant-design/icons"
+import {handleAdd} from "./TableActions"
 
 const {Option} = Select
 
@@ -18,6 +19,7 @@ export const TableHeader = ({
 		searchFunctionality = true,
 		toggleColumnVisibility = true,
 		paginationValues = [10],
+		enableAdd,
 	} = optionalFeature
 
 	const columnMenu = (

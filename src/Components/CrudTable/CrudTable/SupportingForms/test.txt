@@ -1,0 +1,120 @@
+<Form onSubmit={handleSubmit}>
+					<div style={{marginBottom: 16}}>
+						<label>First Name</label>
+						<Field name="firstName">{({field}) => <Input {...field} />}</Field>
+						<ErrorMessage
+							name="firstName"
+							component="span"
+							style={{color: "red"}}
+						/>
+					</div>
+					<div style={{marginBottom: 16}}>
+						<label>Age</label>
+						<Field name="age">
+							{({field}) => <Input type="number" {...field} />}
+						</Field>
+						<ErrorMessage name="age" component="span" style={{color: "red"}} />
+					</div>
+					<div style={{marginBottom: 16}}>
+						<label>City</label>
+						<Field name="city">{({field}) => <Input {...field} />}</Field>
+						<ErrorMessage name="city" component="span" style={{color: "red"}} />
+					</div>
+					<div style={{marginBottom: 16}}>
+						<label>Gender</label>
+						<Field name="gender">
+							{({field}) => (
+								<Radio.Group
+									options={genderOptions}
+									value={field.value}
+									onChange={(e) => setFieldValue(field.name, e.target.value)}
+								/>
+							)}
+						</Field>
+						<ErrorMessage
+							name="gender"
+							component="span"
+							style={{color: "red"}}
+						/>
+					</div>
+					<div style={{marginBottom: 16}}>
+						<label>Tags</label>
+						<Field name="tags">
+							{({field}) => (
+								<Checkbox.Group
+									options={tagOptions}
+									value={field.value}
+									onChange={(values) => {
+										const cleanedValues = values.map((tag) => tag.trim())
+										setFieldValue(field.name, cleanedValues)
+									}}
+								/>
+							)}
+						</Field>
+						<ErrorMessage name="tags" component="span" style={{color: "red"}} />
+					</div>
+					<div style={{marginBottom: 16}}>
+						<label>Comments</label>
+						<Field name="comments">
+							{({field}) => (
+								<Input.TextArea
+									{...field}
+									rows={4}
+									placeholder="Enter your comments here"
+								/>
+							)}
+						</Field>
+						<ErrorMessage
+							name="comments"
+							component="span"
+							style={{color: "red"}}
+						/>
+					</div>
+					<div style={{marginBottom: 16}}>
+						<label>Job Type</label>
+						<Field name="jobType">
+							{({field}) => (
+								<Select
+									{...field}
+									onChange={(value) => setFieldValue(field.name, value)}
+								>
+									{jobTypeOptions.map((option) => (
+										<Option key={option.value} value={option.value}>
+											{option.label}
+										</Option>
+									))}
+								</Select>
+							)}
+						</Field>
+						<ErrorMessage
+							name="jobType"
+							component="span"
+							style={{color: "red"}}
+						/>
+					</div>
+					<div style={{marginBottom: 16}}>
+						<label>Joining Date</label>
+						<Field name="joiningDate">
+							{({field}) => (
+								<DatePicker
+									format={dateFormat}
+									value={field.value ? dayjs(field.value, dateFormat) : null}
+									onChange={(date) =>
+										setFieldValue(
+											field.name,
+											date ? date.format(dateFormat) : null
+										)
+									}
+								/>
+							)}
+						</Field>
+						<ErrorMessage
+							name="joiningDate"
+							component="span"
+							style={{color: "red"}}
+						/>
+					</div>
+					<Button type="primary" htmlType="submit">
+						Add
+					</Button>
+				</Form>
