@@ -1,28 +1,29 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import { lazy, Suspense, useEffect, useState } from "react";
-import App from "../App";
-import RoutesConstant from "./Constant";
-import { useAuthContext } from "../hooks/useAuthContext";
+import {Navigate, Route, Routes} from "react-router-dom"
+import {lazy, Suspense, useEffect, useState} from "react"
+import App from "../App"
+import RoutesConstant from "./Constant"
+import {useAuthContext} from "../hooks/useAuthContext"
 
 // const Login = lazy(() => import("../Pages/Login"));
-const Login = lazy(() => import("../Refactor/LoginIndexFormik"));
-const Update = lazy(() => import("../Pages/Update"));
-const UpdateSuccess = lazy(() => import("../Pages/Update/Success"));
-const Forgot = lazy(() => import("../Pages/Forgot"));
-const ForgotSuccess = lazy(() => import("../Pages/Forgot/Success"));
-const AccountActivation = lazy(() => import("../Pages/AccountActivation"));
+const Login = lazy(() => import("../Refactor/LoginIndexFormik"))
+const Update = lazy(() => import("../Pages/Update"))
+const UpdateSuccess = lazy(() => import("../Pages/Update/Success"))
+const Forgot = lazy(() => import("../Pages/Forgot"))
+const ForgotSuccess = lazy(() => import("../Pages/Forgot/Success"))
+const AccountActivation = lazy(() => import("../Pages/AccountActivation"))
 const AccountActivationSuccess = lazy(() =>
 	import("../Pages/AccountActivation/Success")
-);
-const Dashboard = lazy(() => import("../Pages/Dashbaord"));
-const NotFound = lazy(() => import("../Components/NotFound/index"));
-const NotAllow = lazy(() => import("../Components/NotAllow/index"));
-const Logout = lazy(() => import("../Components/AppHeader/Logout"));
-const Aauth = lazy(() => import("../Components/Aauth"));
+)
+const Dashboard = lazy(() => import("../Pages/Dashbaord"))
+const NotFound = lazy(() => import("../Components/NotFound/index"))
+const NotAllow = lazy(() => import("../Components/NotAllow/index"))
+const Logout = lazy(() => import("../Components/AppHeader/Logout"))
+const Aauth = lazy(() => import("../Components/Aauth"))
+const CrudTable = lazy(() => import("../Components/CrudTable/CrudTable"))
 
 function AppRoutes() {
-	const [loading, setLoading] = useState(false);
-	const { user, role, dispatch } = useAuthContext();
+	const [loading, setLoading] = useState(false)
+	const {user, role, dispatch} = useAuthContext()
 
 	return (
 		<Suspense
@@ -41,6 +42,7 @@ function AppRoutes() {
 					</Route>
 				</Route>
 
+				<Route path={RoutesConstant.crudTable} element={<CrudTable />} />
 				<Route path={RoutesConstant.login} element={<Login />} />
 				<Route path={RoutesConstant.forgotPassword} element={<Forgot />} />
 				<Route
@@ -63,6 +65,6 @@ function AppRoutes() {
 				<Route path={"/logout"} element={<Logout />} />
 			</Routes>
 		</Suspense>
-	);
+	)
 }
-export default AppRoutes;
+export default AppRoutes
