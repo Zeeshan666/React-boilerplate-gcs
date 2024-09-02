@@ -1,6 +1,6 @@
 import React from "react"
 import {optionalFeature, sampleData} from "./SimpleInitialValues"
-import {DynamicTable} from "../Table/DynamicTable"
+import {DynamicTable} from "../../Table/DynamicTable"
 
 function SimpleTable() {
 	return (

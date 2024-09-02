@@ -1,6 +1,6 @@
 import React from "react"
 import {useModal} from "../../Context/ModalContext"
-import {ModalController} from "../Modal/ModalController"
+import {ModalController} from "../../Modal/ModalController"
 import {Button} from "antd"
 import {modalConfigOne} from "./SimpleModalConfig"
 
