@@ -30,7 +30,12 @@ export const RadioButton = (props) => {
 					)
 				}}
 			</Field>
-			<ErrorMessage component="span" name={name} className={errorClass} />
+			<ErrorMessage
+				component="span"
+				name={name}
+				className={errorClass}
+				style={{color: "red"}}
+			/>
 		</>
 	)
 }

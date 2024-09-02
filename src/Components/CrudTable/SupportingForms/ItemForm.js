@@ -23,6 +23,7 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 				.map((tag) => tag.trim()) // Trim each tag
 		: []
 
+	// Parse the joiningDate from string to moment object using "DD/MM/YYYY"
 	const initialDate = initialValues.joiningDate
 		? moment(initialValues.joiningDate, dateFormat, true) // `true` for strict parsing
 		: null
@@ -38,7 +39,7 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 				const formattedValues = {
 					...values,
 					joiningDate: values.joiningDate
-						? moment(values.joiningDate).format(dateFormat) // Use the specified format
+						? moment(values.joiningDate).format(dateFormat) // Ensure "DD/MM/YYYY"
 						: null,
 				}
 				onSubmit(formattedValues)
@@ -48,6 +49,7 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 		>
 			{({handleSubmit, setFieldValue, values}) => (
 				<Form onSubmit={handleSubmit}>
+					{/* Form fields */}
 					<FormControls
 						control="input"
 						type="text"
