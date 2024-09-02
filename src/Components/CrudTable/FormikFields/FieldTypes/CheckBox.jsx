@@ -1,6 +1,6 @@
-import React from "react";
-import { Field, ErrorMessage } from "formik";
-import { Checkbox } from "antd";
+import React from "react"
+import {Field, ErrorMessage} from "formik"
+import {Checkbox} from "antd"
 
 export const CheckBox = (props) => {
 	const {
@@ -12,19 +12,16 @@ export const CheckBox = (props) => {
 		fieldClass,
 		errorClass,
 		...rest
-	} = props;
-	console.log(props);
+	} = props
+	console.log(props)
 	return (
 		<>
 			<Field name={name}>
-				{({ field }) => (
+				{({field}) => (
 					<>
 						{options &&
 							options.map((option) => (
-								<div
-									className={keyClass}
-									key={option.value}
-								>
+								<div className={keyClass} key={option.value}>
 									<input
 										type="checkbox"
 										id={option.value}
@@ -34,10 +31,7 @@ export const CheckBox = (props) => {
 										value={option.value}
 										// checked={field.value.includes(option.value)}
 									/>
-									<label
-										className={labelClass}
-										htmlFor={option.value}
-									>
+									<label className={labelClass} htmlFor={option.value}>
 										{option.key}
 									</label>
 								</div>
@@ -45,16 +39,12 @@ export const CheckBox = (props) => {
 					</>
 				)}
 			</Field>
-			<ErrorMessage
-				component="span"
-				name={name}
-				className={errorClass}
-			/>
+			<ErrorMessage component="span" name={name} className={errorClass} />
 		</>
-	);
-};
+	)
+}
 
-const CheckboxGroup = Checkbox.Group;
+const CheckboxGroup = Checkbox.Group
 
 export const CheckboxField = (props) => {
 	const {
@@ -66,14 +56,14 @@ export const CheckboxField = (props) => {
 		fieldClass,
 		errorClass,
 		...rest
-	} = props;
+	} = props
 
 	return (
 		<>
 			<label className={labelClass}>{label}:</label>
 			<Field name={name}>
-				{({ field, form }) => {
-					const { setFieldValue, setFieldTouched } = form;
+				{({field, form}) => {
+					const {setFieldValue, setFieldTouched} = form
 					return (
 						<CheckboxGroup
 							{...rest}
@@ -83,22 +73,15 @@ export const CheckboxField = (props) => {
 						>
 							{options &&
 								options.map((option) => (
-									<div
-										className={keyClass}
-										key={option.value}
-									>
-										<Checkbox value={option.value}>{option.key}</Checkbox>
+									<div className={keyClass} key={option.value}>
+										<Checkbox value={option.value}>{option.label}</Checkbox>
 									</div>
 								))}
 						</CheckboxGroup>
-					);
+					)
 				}}
 			</Field>
-			<ErrorMessage
-				component="span"
-				name={name}
-				className={errorClass}
-			/>
+			<ErrorMessage component="span" name={name} className={errorClass} />
 		</>
-	);
-};
+	)
+}

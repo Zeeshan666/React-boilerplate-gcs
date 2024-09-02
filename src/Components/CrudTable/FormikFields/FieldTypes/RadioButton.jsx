@@ -1,19 +1,19 @@
-import React from "react";
-import { Field, ErrorMessage } from "formik";
-import { Radio } from "antd";
+import React from "react"
+import {Field, ErrorMessage} from "formik"
+import {Radio} from "antd"
 
-const RadioGroup = Radio.Group;
+const RadioGroup = Radio.Group
 
 export const RadioButton = (props) => {
-	const { label, name, options, labelClass, fieldClass, errorClass, ...rest } =
-		props;
-
+	const {label, name, options, labelClass, fieldClass, errorClass, ...rest} =
+		props
+	console.log(props?.options)
 	return (
 		<>
 			<label className={labelClass}>{label} :</label>
 			<Field name={name}>
-				{({ field, form }) => {
-					const { setFieldValue } = form;
+				{({field, form}) => {
+					const {setFieldValue} = form
 					return (
 						<RadioGroup
 							{...rest}
@@ -23,14 +23,14 @@ export const RadioButton = (props) => {
 							{options &&
 								options.map((option) => (
 									<Radio key={option.value} value={option.value}>
-										{option.key}
+										{option.label}
 									</Radio>
 								))}
 						</RadioGroup>
-					);
+					)
 				}}
 			</Field>
 			<ErrorMessage component="span" name={name} className={errorClass} />
 		</>
-	);
-};
+	)
+}

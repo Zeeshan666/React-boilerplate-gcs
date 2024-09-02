@@ -1,11 +1,11 @@
-import {
-	editModalConfig,
-	deleteModalConfig,
-	addModalConfig,
-} from "../Modal/ModalConfig"
 import {v4 as uuidv4} from "uuid"
 
-export const handleDelete = (showModal, deleteKey, setData) => {
+export const handleDelete = (
+	showModal,
+	deleteKey,
+	setData,
+	deleteModalConfig
+) => {
 	console.log("handleDelete")
 	showModal(
 		deleteModalConfig(() => {
@@ -13,7 +13,8 @@ export const handleDelete = (showModal, deleteKey, setData) => {
 		})
 	)
 }
-export const handleAdd = (showModal, setData, hideModal) => {
+
+export const handleAdd = (showModal, setData, hideModal, addModalConfig) => {
 	console.log("handleAdd")
 	showModal(
 		addModalConfig((values) => {
@@ -23,7 +24,13 @@ export const handleAdd = (showModal, setData, hideModal) => {
 	)
 }
 
-export const handleEdit = (showModal, item, setData, hideModal) => {
+export const handleEdit = (
+	showModal,
+	item,
+	setData,
+	hideModal,
+	editModalConfig
+) => {
 	console.log("handleEdit")
 	showModal(
 		editModalConfig(item, (values) => {
