@@ -84,22 +84,22 @@ export const validationSchema = Yup.object().shape({
 		.required("Comments are required")
 		.min(10, "Comments must be at least 10 characters")
 		.max(250, "Comments must be at most 250 characters"),
-	// joiningDate: Yup.string()
-	// 	.required("Joining date is required")
-	// 	.matches(
-	// 		/^\d{2}\/\d{2}\/\d{4}$/,
-	// 		`Joining date must be in the format ${dateFormat}`
-	// 	)
-	// 	.test("valid-date", "Joining date must be a valid date", (value) => {
-	// 		const dateParts = value.split("/")
-	// 		const day = parseInt(dateParts[0], 10)
-	// 		const month = parseInt(dateParts[1], 10) - 1 // Months are 0-based in JS
-	// 		const year = parseInt(dateParts[2], 10)
-	// 		const date = new Date(year, month, day)
-	// 		return (
-	// 			date.getFullYear() === year &&
-	// 			date.getMonth() === month &&
-	// 			date.getDate() === day
-	// 		)
-	// 	}),
+	joiningDate: Yup.string()
+		.required("Joining date is required")
+		.matches(
+			/^\d{2}\/\d{2}\/\d{4}$/,
+			`Joining date must be in the format ${dateFormat}`
+		)
+		.test("valid-date", "Joining date must be a valid date", (value) => {
+			const dateParts = value.split("/")
+			const day = parseInt(dateParts[0], 10)
+			const month = parseInt(dateParts[1], 10) - 1 // Months are 0-based in JS
+			const year = parseInt(dateParts[2], 10)
+			const date = new Date(year, month, day)
+			return (
+				date.getFullYear() === year &&
+				date.getMonth() === month &&
+				date.getDate() === day
+			)
+		}),
 })
