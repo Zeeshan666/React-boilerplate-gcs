@@ -30,7 +30,7 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 	// 	: null
 
 	const initialDate = initialValues.joiningDate
-		? dayjs(initialValues.joiningDate, dateFormat, true) // `true` for strict parsing
+		? dayjs(initialValues.joiningDate, dateFormat, true)
 		: null
 
 	return (
@@ -46,10 +46,12 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 					// joiningDate: values.joiningDate
 					// 	? moment(values.joiningDate).format(dateFormat) // Ensure "DD/MM/YYYY"
 					// 	: null,
-					// joiningDate: values.joiningDate
-					// 	? dayjs(values.joiningDate).format(dateFormat) // Ensure "DD/MM/YYYY"
-					// 	: null,
+					joiningDate: values.joiningDate
+						? dayjs(values.joiningDate, dateFormat, true).format(dateFormat)
+						: null,
 				}
+
+				console.log(formattedValues)
 				onSubmit(formattedValues)
 				resetForm() // Reset form fields after submission
 			}}
