@@ -28,14 +28,14 @@ export const DatePicker = ({
 						<AntDatePicker
 							id={name}
 							format={format}
-							// value={value ? moment(value, format, true) : null}
-							// onChange={(date) =>
-							// 	setFieldValue(name, date ? moment(date).format(format) : null)
-							// }
-							value={value ? dayjs(value, format, true) : null}
-							onChange={(date) => {
+							value={value ? moment(value, format, true) : null}
+							onChange={(date) =>
 								setFieldValue(name, date ? date.format(format) : null)
-							}}
+							}
+							// value={value ? dayjs(value, format, true) : null}
+							// onChange={(date) => {
+							// 	setFieldValue(name, date ? date.format(format) : null)
+							// }}
 							{...rest}
 						/>
 					)
