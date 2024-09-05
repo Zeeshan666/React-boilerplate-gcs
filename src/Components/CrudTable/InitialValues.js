@@ -14,7 +14,7 @@ export const initialData = [
 		city: "New York",
 		tags: ["Developer", "Manager"],
 		jobType: "Full-Time",
-		comments: "lorem ipsum",
+		comments: "lorem ipsum male",
 		joiningDate: "15/09/2024",
 	},
 	{
@@ -55,6 +55,13 @@ export const optionalFeature = {
 		table: tableStyles1,
 		column: columnStyles1,
 	},
+	filterColumns: [
+		{label: "Name", value: "firstName"},
+		{label: "Age", value: "age"},
+		{label: "Gender", value: "gender"},
+		{label: "City", value: "city"},
+		{label: "Comments", value: "comments"},
+	],
 }
 
 export const validationSchema = Yup.object().shape({

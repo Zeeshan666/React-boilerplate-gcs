@@ -42,14 +42,31 @@ export const validateAndReplaceData = (data, columnKeys) => {
 	})
 }
 
-export const getFilteredData = (data, columnKeys, searchText) => {
+export const getFilteredData = (
+	data,
+	columnKeys,
+	searchText,
+	selectedColumnFilter
+) => {
 	return data.filter((rowData) => {
-		return columnKeys.some((column) =>
-			(rowData[column] || "")
-				.toString()
-				.toLowerCase()
-				.includes(searchText.toLowerCase())
-		)
+		// Check if selectedColumnFilter is empty or not
+		if (selectedColumnFilter.length === 0) {
+			// If empty, use all columnKeys as before
+			return columnKeys.some((column) =>
+				(rowData[column] || "")
+					.toString()
+					.toLowerCase()
+					.includes(searchText.toLowerCase())
+			)
+		} else {
+			// Use only selectedColumnFilter for filtering
+			return selectedColumnFilter.every((column) =>
+				(rowData[column] || "")
+					.toString()
+					.toLowerCase()
+					.includes(searchText.toLowerCase())
+			)
+		}
 	})
 }
 
@@ -90,4 +107,16 @@ export const handleSelectedRows = (
 	setSelectedRowKeys(selectedRowKeys)
 	console.log("Selected Row Keys: ", selectedRowKeys)
 	console.log("Selected Rows: ", selectedRows)
+}
+
+export const handleColumnFilters = (
+	value,
+	selectedColumnFilter,
+	setSelectedColumnFilter
+) => {
+	setSelectedColumnFilter((prev) =>
+		prev.includes(value)
+			? prev.filter((col) => col !== value)
+			: [...prev, value]
+	)
 }

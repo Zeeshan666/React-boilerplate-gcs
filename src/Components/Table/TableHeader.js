@@ -13,11 +13,14 @@ export const TableHeader = ({
 	visibleColumns,
 	handleColumnToggle,
 	optionalFeature,
+	selectedColumnFilter,
+	handleColumnFilters,
 }) => {
 	const {
 		searchFunctionality = true,
 		toggleColumnVisibility = true,
 		paginationValues = [10],
+		filterColumns = [],
 	} = optionalFeature
 
 	const columnMenu = (
@@ -30,6 +33,21 @@ export const TableHeader = ({
 							onChange={() => handleColumnToggle(col.key)}
 						>
 							{col.title}
+						</Checkbox>
+					</Menu.Item>
+				))}
+		</Menu>
+	)
+	const filterMenu = (
+		<Menu>
+			{filterColumns.length > 0 &&
+				filterColumns.map((filterCol) => (
+					<Menu.Item key={filterCol.value}>
+						<Checkbox
+							checked={selectedColumnFilter.includes(filterCol.value)}
+							onChange={() => handleColumnFilters(filterCol.value)}
+						>
+							{filterCol.label}
 						</Checkbox>
 					</Menu.Item>
 				))}
@@ -60,8 +78,13 @@ export const TableHeader = ({
 					))}
 				</Select>
 				{toggleColumnVisibility && (
-					<Dropdown menu={columnMenu}>
+					<Dropdown overlay={columnMenu}>
 						<Button>Toggle Columns</Button>
+					</Dropdown>
+				)}
+				{filterColumns.length > 0 && (
+					<Dropdown overlay={filterMenu}>
+						<Button>Filter Columns</Button>
 					</Dropdown>
 				)}
 			</Space>

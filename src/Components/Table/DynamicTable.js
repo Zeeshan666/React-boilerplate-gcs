@@ -11,6 +11,7 @@ import {
 	handleTableChanges,
 	sortData,
 	handleSelectedRows,
+	handleColumnFilters,
 } from "./TableUtils"
 import {handleEdit, handleDelete, handleAdd} from "./TableActions"
 import {useModal} from "../../Context/ModalContext"
@@ -28,6 +29,7 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 	const [sorter, setSorter] = useState({})
 	const [visibleColumns, setVisibleColumns] = useState([])
 	const [selectedRowKeys, setSelectedRowKeys] = useState([])
+	const [selectedColumnFilter, setSelectedColumnFilter] = useState([])
 
 	const {isModalVisible, modalConfig, showModal, hideModal} = useModal()
 
@@ -40,11 +42,21 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 		setVisibleColumns(columnKeys)
 	}, [initialData])
 
-	let filteredData = getFilteredData(data, columnKeys, searchText)
+	let filteredData = getFilteredData(
+		data,
+		columnKeys,
+		searchText,
+		selectedColumnFilter
+	)
 
 	useEffect(() => {
-		filteredData = getFilteredData(data, columnKeys, searchText)
-	}, [data])
+		filteredData = getFilteredData(
+			data,
+			columnKeys,
+			searchText,
+			selectedColumnFilter
+		)
+	}, [data, searchText, selectedColumnFilter])
 
 	const {enableEdit, enableDelete, enableAdd, styling} = optionalFeature
 
@@ -69,6 +81,14 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 						handleColumnToggle(key, visibleColumns, setVisibleColumns)
 					}
 					optionalFeature={optionalFeature}
+					selectedColumnFilter={selectedColumnFilter}
+					handleColumnFilters={(value) =>
+						handleColumnFilters(
+							value,
+							selectedColumnFilter,
+							setSelectedColumnFilter
+						)
+					}
 				/>
 				<Table
 					dataSource={filteredData}
