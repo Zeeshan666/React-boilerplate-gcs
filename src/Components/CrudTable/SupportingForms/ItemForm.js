@@ -25,9 +25,9 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 		: []
 
 	// // Parse the joiningDate from string to moment object using "DD/MM/YYYY"
-	const initialDate = initialValues.joiningDate
-		? moment(initialValues.joiningDate, dateFormat, true) // `true` for strict parsing
-		: null
+	// const initialDate = initialValues.joiningDate
+	// 	? moment(initialValues.joiningDate, dateFormat, true) // `true` for strict parsing
+	// 	: null
 
 	// const initialDate = initialValues.joiningDate
 	// 	? dayjs(initialValues.joiningDate, dateFormat, true)
@@ -38,7 +38,7 @@ const ItemForm = ({initialValues, onSubmit, isEditMode}) => {
 			initialValues={{
 				...initialValues,
 				tags: cleanTags,
-				joiningDate: initialDate,
+				// joiningDate: initialDate,
 			}}
 			onSubmit={(values, {resetForm}) => {
 				const formattedValues = {
