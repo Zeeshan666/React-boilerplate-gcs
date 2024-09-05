@@ -10,6 +10,7 @@ import {
 	handleSearch,
 	handleTableChanges,
 	sortData,
+	handleSelectedRows,
 } from "./TableUtils"
 import {handleEdit, handleDelete, handleAdd} from "./TableActions"
 import {useModal} from "../../Context/ModalContext"
@@ -49,11 +50,8 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 
 	const rowSelection = {
 		selectedRowKeys,
-		onChange: (selectedRowKeys, selectedRows) => {
-			setSelectedRowKeys(selectedRowKeys)
-			console.log("Selected Row Keys: ", selectedRowKeys)
-			console.log("Selected Rows: ", selectedRows) // Logs the entire selected row objects
-		},
+		onChange: (selectedRowKeys, selectedRows) =>
+			handleSelectedRows(selectedRowKeys, setSelectedRowKeys, selectedRows),
 	}
 
 	return (

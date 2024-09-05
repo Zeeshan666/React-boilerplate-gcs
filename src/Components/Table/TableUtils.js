@@ -81,3 +81,13 @@ export const sortData = (a, b, key) => {
 	}
 	return (a[key] || "").toString().localeCompare((b[key] || "").toString())
 }
+
+export const handleSelectedRows = (
+	selectedRowKeys,
+	setSelectedRowKeys,
+	selectedRows
+) => {
+	setSelectedRowKeys(selectedRowKeys)
+	console.log("Selected Row Keys: ", selectedRowKeys)
+	console.log("Selected Rows: ", selectedRows)
+}

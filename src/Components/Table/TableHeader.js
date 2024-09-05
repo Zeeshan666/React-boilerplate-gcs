@@ -60,7 +60,7 @@ export const TableHeader = ({
 					))}
 				</Select>
 				{toggleColumnVisibility && (
-					<Dropdown overlay={columnMenu}>
+					<Dropdown menu={columnMenu}>
 						<Button>Toggle Columns</Button>
 					</Dropdown>
 				)}
