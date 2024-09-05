@@ -8,7 +8,8 @@ export const DynamicModal = ({
 	content,
 	buttons = [],
 	footer,
-	...modalProps
+	modalProps,
+	// style,
 }) => {
 	return (
 		<Modal
@@ -36,6 +37,7 @@ export const DynamicModal = ({
 					</Button>
 				))
 			}
+			// style={style}
 			{...modalProps}
 		>
 			{content && content()}

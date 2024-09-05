@@ -22,9 +22,17 @@ export const deleteModalConfig = (onDelete) => ({
 		},
 	],
 	modalProps: {
-		centered: true,
-		width: 400,
+		style: {
+			width: 400,
+			left: 500,
+			top: 200,
+		},
 	},
+	// style: {
+	// 	width: 400,
+	// 	left: 500,
+	// 	top: 200,
+	// },
 })
 
 export const addModalConfig = (onAdd) => ({
@@ -55,8 +63,10 @@ export const addModalConfig = (onAdd) => ({
 		},
 	],
 	modalProps: {
-		centered: true,
-		width: 500,
+		style: {
+			width: 500,
+			left: -500,
+		},
 	},
 })
 
@@ -78,7 +88,9 @@ export const editModalConfig = (initialValues, onSave) => ({
 		},
 	],
 	modalProps: {
-		centered: true,
-		width: 500,
+		style: {
+			width: 500,
+			left: +600,
+		},
 	},
 })
