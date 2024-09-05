@@ -58,7 +58,8 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 		)
 	}, [data, searchText, selectedColumnFilter])
 
-	const {enableEdit, enableDelete, enableAdd, styling} = optionalFeature
+	const {enableEdit, enableDelete, enableAdd, styling, enablePagination} =
+		optionalFeature
 
 	const rowSelection = {
 		selectedRowKeys,
@@ -72,7 +73,7 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 				<TableHeader
 					searchText={searchText}
 					handleSearch={(value) => handleSearch(value, setSearchText)}
-					pagination={paginationValue}
+					pagination={enablePagination ? paginationValue : false}
 					setPagination={setPaginationValue}
 					columnDefinitions={columnDefinitions}
 					visibleColumns={visibleColumns}
@@ -92,7 +93,7 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 				/>
 				<Table
 					dataSource={filteredData}
-					pagination={paginationValue}
+					pagination={enablePagination ? paginationValue : false}
 					sortDirections={["ascend", "descend"]}
 					loading={false}
 					scroll={{x: "max-content"}}

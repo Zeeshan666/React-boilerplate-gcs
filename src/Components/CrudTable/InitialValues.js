@@ -61,7 +61,9 @@ export const optionalFeature = {
 		{label: "Gender", value: "gender"},
 		{label: "City", value: "city"},
 		{label: "Comments", value: "comments"},
+		{label: "Tags", value: "tags"},
 	],
+	enablePagination: false,
 }
 
 export const validationSchema = Yup.object().shape({

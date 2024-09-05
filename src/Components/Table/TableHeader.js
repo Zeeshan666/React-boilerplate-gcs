@@ -19,6 +19,7 @@ export const TableHeader = ({
 	const {
 		searchFunctionality = true,
 		toggleColumnVisibility = true,
+		enablePagination = true,
 		paginationValues = [10],
 		filterColumns = [],
 	} = optionalFeature
@@ -66,17 +67,22 @@ export const TableHeader = ({
 						style={{width: 200}}
 					/>
 				)}
-				<Select
-					defaultValue={pagination.pageSize}
-					onChange={(value) => setPagination({...pagination, pageSize: value})}
-					style={{width: 120}}
-				>
-					{paginationValues.map((value) => (
-						<Option key={value} value={value}>
-							{value}
-						</Option>
-					))}
-				</Select>
+				{enablePagination && (
+					<Select
+						defaultValue={pagination.pageSize}
+						onChange={(value) =>
+							setPagination({...pagination, pageSize: value})
+						}
+						style={{width: 120}}
+					>
+						{paginationValues &&
+							paginationValues.map((value) => (
+								<Option key={value} value={value}>
+									{value}
+								</Option>
+							))}
+					</Select>
+				)}
 				{toggleColumnVisibility && (
 					<Dropdown overlay={columnMenu}>
 						<Button>Toggle Columns</Button>
