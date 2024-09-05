@@ -26,6 +26,7 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 	})
 	const [sorter, setSorter] = useState({})
 	const [visibleColumns, setVisibleColumns] = useState([])
+	const [selectedRowKeys, setSelectedRowKeys] = useState([])
 
 	const {isModalVisible, modalConfig, showModal, hideModal} = useModal()
 
@@ -45,6 +46,15 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 	}, [data])
 
 	const {enableEdit, enableDelete, enableAdd, styling} = optionalFeature
+
+	const rowSelection = {
+		selectedRowKeys,
+		onChange: (selectedRowKeys, selectedRows) => {
+			setSelectedRowKeys(selectedRowKeys)
+			console.log("Selected Row Keys: ", selectedRowKeys)
+			console.log("Selected Rows: ", selectedRows) // Logs the entire selected row objects
+		},
+	}
 
 	return (
 		<>
@@ -70,6 +80,7 @@ export const DynamicTable = ({initialData, optionalFeature}) => {
 					scroll={{x: "max-content"}}
 					bordered
 					style={styling?.table}
+					rowSelection={rowSelection}
 					onChange={(paginationValue, filter, sorter) => {
 						handleTableChanges(
 							paginationValue,
