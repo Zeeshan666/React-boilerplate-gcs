@@ -1,51 +1,56 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
-import { NavigationBlocker } from "./blocker";
+import {useCallback, useEffect, useState} from "react"
+import {useLocation, useNavigate} from "react-router"
+import {NavigationBlocker} from "./blocker"
 
 export function useNavigatingAway(canShowDialogPrompt) {
-  const navigate = useNavigate();
-  const currentLocation = useLocation();
-  const [showDialogPrompt, setShowDialogPrompt] = useState(false);
-  const [wantToNavigateTo, setWantToNavigateTo] = useState(null);
-  const [isNavigationConfirmed, setIsNavigationConfirmed] = useState(false);
+	const navigate = useNavigate()
+	const currentLocation = useLocation()
+	const [showDialogPrompt, setShowDialogPrompt] = useState(false)
+	const [wantToNavigateTo, setWantToNavigateTo] = useState(null)
+	const [isNavigationConfirmed, setIsNavigationConfirmed] = useState(false)
 
-  const handleNavigationBlocking = useCallback(
-    (locationToNavigateTo) => {
-      if (
-        !isNavigationConfirmed &&
-        locationToNavigateTo.location.pathname !== currentLocation.pathname
-      ) {
-        setShowDialogPrompt(true);
-        setWantToNavigateTo(locationToNavigateTo);
-        return false;
-      }
-      return true;
-    },
-    [isNavigationConfirmed]
-  );
+	const handleNavigationBlocking = useCallback(
+		(locationToNavigateTo) => {
+			if (
+				!isNavigationConfirmed &&
+				locationToNavigateTo.location.pathname !== currentLocation.pathname
+			) {
+				setShowDialogPrompt(true)
+				setWantToNavigateTo(locationToNavigateTo)
+				return false
+			}
+			return true
+		},
+		[isNavigationConfirmed]
+	)
 
-  const cancelNavigation = useCallback(() => {
-    setIsNavigationConfirmed(false);
-    setShowDialogPrompt(false);
-  }, []);
+	const cancelNavigation = useCallback(() => {
+		setIsNavigationConfirmed(false)
+		setShowDialogPrompt(false)
+	}, [])
 
-  const confirmNavigation = useCallback(() => {
-    setIsNavigationConfirmed(true);
-    setShowDialogPrompt(false);
-  }, []);
+	const confirmNavigation = useCallback(() => {
+		setIsNavigationConfirmed(true)
+		setShowDialogPrompt(false)
+	}, [])
 
-  useEffect(() => {
-    if (isNavigationConfirmed && wantToNavigateTo) {
-      if(wantToNavigateTo.location.pathname&&wantToNavigateTo.location.search)
-      navigate(wantToNavigateTo.location.pathname+wantToNavigateTo.location.search);
-      else{
-        navigate(wantToNavigateTo.location.pathname);
-      }
-    }
-  }, [isNavigationConfirmed, wantToNavigateTo]);
+	useEffect(() => {
+		if (isNavigationConfirmed && wantToNavigateTo) {
+			if (
+				wantToNavigateTo.location.pathname &&
+				wantToNavigateTo.location.search
+			)
+				navigate(
+					wantToNavigateTo.location.pathname + wantToNavigateTo.location.search
+				)
+			else {
+				navigate(wantToNavigateTo.location.pathname)
+			}
+		}
+	}, [isNavigationConfirmed, wantToNavigateTo])
 
-  NavigationBlocker(handleNavigationBlocking, canShowDialogPrompt);
+	NavigationBlocker(handleNavigationBlocking, canShowDialogPrompt)
 
-  return [showDialogPrompt, confirmNavigation, cancelNavigation];
+	return [showDialogPrompt, confirmNavigation, cancelNavigation]
 }

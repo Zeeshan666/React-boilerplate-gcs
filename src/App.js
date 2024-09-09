@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import "./App.css";
 import AppHeader from "./Components/AppHeader";
 import SideMenu from "./Components/SideMenu";
-import { BidContextProvider } from "./Context/bidContext";
+
 import { useAuthContext } from "./hooks/useAuthContext";
 
 
@@ -14,7 +14,7 @@ function App() {
 
  
     return (
-        <BidContextProvider>
+     
             <div className="App">
                 <div id="layout-wrapper">
                     <div className="vertical-menu">
@@ -32,7 +32,7 @@ function App() {
                     </div>
                 </div>
             </div>
-        </BidContextProvider>
+       
 
     );
 }
